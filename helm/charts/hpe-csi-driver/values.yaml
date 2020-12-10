@@ -22,3 +22,7 @@ iscsi:
 # registry prefix for hpe csi images
 registry: "quay.io"
 
+# HPE CSI info metrics are Prometheus metrics that allow separately provided
+# storage system metrics to be correlated with resources managed by the HPE
+# CSI Driver.
+enableInfoMetrics: false

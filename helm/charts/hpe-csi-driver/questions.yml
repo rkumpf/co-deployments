@@ -31,3 +31,9 @@ questions:
   required: false
   description: "Specify password for iSCSI CHAP authentication"
   group: "HPE iSCSI settings"
+- variable: enableInfoMetrics
+  label: "Enable HPE CSI info metrics for Prometheus"
+  type: boolean
+  default: false
+  description: "Enable HPE CSI info metrics for Prometheus, so that separately provided storage system metrics can be correlated with resources managed by the HPE CSI Driver"
+  group: "HPE CSI info metrics settings"

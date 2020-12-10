@@ -189,6 +189,25 @@ spec:
           volumeMounts:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
+        {{- if .Values.enableInfoMetrics }}
+        - name: csi-info-metrics
+          {{- if .Values.registry }}
+          image: {{ .Values.registry }}/hpestorage/csi-info-metrics:edge
+          {{- else }}
+          image: hpestorage/csi-info-metrics:edge
+          {{- end }}  
+          args:
+            - "--telemetry.addr=8080"
+            - "--telemetry.path=/metrics"
+            - "--log.path=/var/log/hpe-csi-info-metrics.log"
+          env:
+            - name: LOG_LEVEL
+              value: {{ .Values.logLevel }}
+          imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
+          volumeMounts:
+            - name: log-dir
+              mountPath: /var/log
+        {{- end }}
       volumes:
         - name: socket-dir
           emptyDir: {}
