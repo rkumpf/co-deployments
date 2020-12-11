@@ -141,7 +141,7 @@ spec:
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-volume-group-snapshotter
           {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/volume-group-snapshotter:v1.0.0-beta
+          image: {{ .Values.registry }}/hpestorage/volume-group-snapshotter:edge
           {{- else }}
           image: hpestorage/volume-group-snapshotter:v1.0.0-beta
           {{- end }}
@@ -157,7 +157,7 @@ spec:
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-volume-group-provisioner
           {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/volume-group-provisioner:v1.0.0-beta
+          image: {{ .Values.registry }}/hpestorage/volume-group-provisioner:edge
           {{- else }}
           image: hpestorage/volume-group-provisioner:v1.0.0-beta
           {{- end }}
@@ -173,7 +173,7 @@ spec:
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-extensions
           {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/csi-extensions:v1.0.0
+          image: {{ .Values.registry }}/hpestorage/csi-extensions:edge
           {{- else }}
           image: hpestorage/csi-extensions:v1.0.0
           {{- end }}  
@@ -196,8 +196,10 @@ spec:
           {{- else }}
           image: hpestorage/csi-info-metrics:edge
           {{- end }}  
+          ports:
+          - containerPort: 9099
           args:
-            - "--telemetry.addr=8080"
+            - "--telemetry.addr=9099"
             - "--telemetry.path=/metrics"
             - "--log.path=/var/log/hpe-csi-info-metrics.log"
           env:

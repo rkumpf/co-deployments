@@ -1,0 +1,22 @@
+{{- if .Values.enableInfoMetrics }}
+---
+
+# HPE CSI Info Metrics Service
+kind: Service
+apiVersion: v1
+metadata:
+  name: hpe-csi-info-metrics-service
+  namespace: {{ .Release.Namespace }}
+#  namespace: kube-system
+  labels:
+    app: hpe-csi-info-metrics-service
+    k8s_cluster: us-west-prod-1
+spec:
+  ports:
+    - name: http-metrics
+      port: 9090
+      protocol: TCP
+      targetPort: 9099
+  selector:
+    app: hpe-csi-controller
+{{- end }}
