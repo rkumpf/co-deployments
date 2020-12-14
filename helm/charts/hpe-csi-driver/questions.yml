@@ -31,9 +31,42 @@ questions:
   required: false
   description: "Specify password for iSCSI CHAP authentication"
   group: "HPE iSCSI settings"
-- variable: enableInfoMetrics
+- variable: infoMetrics.enabled
   label: "Enable HPE CSI info metrics for Prometheus"
   type: boolean
   default: false
-  description: "Enable HPE CSI info metrics for Prometheus, so that separately provided storage system metrics can be correlated with resources managed by the HPE CSI Driver"
+  description: "Enable HPE CSI info metrics for Prometheus, so that separately provided storage system metrics can be correlated with resources managed by the HPE CSI Driver.  When false, other settings in this group have no effect."
+  group: "HPE CSI info metrics settings"
+- variable: infoMetrics.service.type
+  label: "The type of Service created to provide access to the info metrics"
+  type: enum
+  default: "ClusterIP"
+  options:
+    - "ClusterIP"
+    - "NodePort"
+  description: "The type of Service created to provide access to the info metrics: ClusterIP if Prometheus is running within the cluster or NodePort if the service must be accessed from outside the cluster"
+  group: "HPE CSI info metrics settings"
+- variable: infoMetrics.service.port
+  label: "The port exposed by the info metrics Service within the cluster"
+  type: int
+  default: 9090
+  description: "The port exposed by the info metrics Service within the cluster"
+  group: "HPE CSI info metrics settings"
+- variable: infoMetrics.service.nodePort
+  label: "The external node port at which info metrics are served, when the Service type is NodePort"
+  type: int
+  default: 30901
+  description: "The external node port at which info metrics are served, when the Service type is NodePort"
+  group: "HPE CSI info metrics settings"
+- variable: infoMetrics.localPrometheusOperator
+  label: "Enable discovery as a scrape target by a Prometheus Operator running within the cluster"
+  type: boolean
+  default: false
+  description: "Enable discovery as a scrape target by a Prometheus Operator running within the cluster by creating a ServiceMonitor resource.  Must be set to false if Prometheus custom resource definitions are not installed."
+  group: "HPE CSI info metrics settings"
+- variable: infoMetrics.scrapeInterval
+  label: "The time interval for Prometheus to scrape the info metrics"
+  type: string
+  default: 30s
+  description: "The time interval for Prometheus to scrape the info metrics, when discovery by a Prometheus instance within the cluster is enabled"
   group: "HPE CSI info metrics settings"

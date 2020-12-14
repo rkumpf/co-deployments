@@ -25,4 +25,27 @@ registry: "quay.io"
 # HPE CSI info metrics are Prometheus metrics that allow separately provided
 # storage system metrics to be correlated with resources managed by the HPE
 # CSI Driver.
-enableInfoMetrics: false
+infoMetrics:
+  # When enabled is set to false, other values in this section have no effect.
+  enabled: false
+
+  # A Service is created to provide access to the info metrics.
+  service:
+    # The "ClusterIP" type is appropriate when Prometheus is running within the
+    # cluster.  The "NodePort" type can be used if the service must be accessed
+    # from outside the cluster.
+    type: ClusterIP
+
+    # The port exposed by the info metrics Service within the cluster.
+    port: 9090
+
+    # The external node port at which info metrics are served, when the
+    # serviceType is NodePort.
+    nodePort: 30901
+
+  # When true, a ServiceMonitor is created to enable discovery as a scrape
+  # target by a Prometheus Operator running within the cluster.  If set to
+  # true when the Prometheus custom resource definitions are not installed,
+  # chart installation will be unsuccessful.
+  localPrometheusOperator: false
+  scrapeInterval: 30s

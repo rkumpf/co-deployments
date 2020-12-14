@@ -1,4 +1,4 @@
-{{- if .Values.enableInfoMetrics }}
+{{- if .Values.infoMetrics.enabled }}
 ---
 
 # HPE CSI Info Metrics Service
@@ -11,14 +11,19 @@ metadata:
     app: hpe-csi-info-metrics-service
     k8s_cluster: us-west-prod-1
 spec:
+  type: {{ .Values.infoMetrics.service.type | quote }}
   ports:
     - name: http-metrics
-      port: 9090
+      port: {{ .Values.infoMetrics.service.port }}
+      {{- if eq .Values.infoMetrics.service.type "NodePort" }}
+      nodePort: {{ .Values.infoMetrics.service.nodePort }}
+      {{- end }}
       protocol: TCP
       targetPort: 9099
   selector:
     app: hpe-csi-controller
 
+{{- if .Values.infoMetrics.localPrometheusOperator }}
 ---
 # Service Monitor to enable discovery as a Prometheus scrape target
 
@@ -39,7 +44,9 @@ spec:
   endpoints:
     - port: http-metrics
       scheme: http
-      interval: 30s
+      interval: {{ .Values.infoMetrics.scrapeInterval | quote }}
+  # TODO: Make target labels configurable
   targetLabels:
     - k8s_cluster
+{{- end }}
 {{- end }}
