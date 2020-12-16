@@ -9,7 +9,9 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     app: hpe-csi-info-metrics-service
-    k8s_cluster: us-west-prod-1
+    {{- range $key, $value := .Values.infoMetrics.service.customLabels }}
+    {{ $key }}: {{ $value | quote -}}
+    {{ end }}
 spec:
   type: {{ .Values.infoMetrics.service.type | quote }}
   ports:
@@ -45,8 +47,8 @@ spec:
     - port: http-metrics
       scheme: http
       interval: {{ .Values.infoMetrics.scrapeInterval | quote }}
-  # TODO: Make target labels configurable
-  targetLabels:
-    - k8s_cluster
+  {{- if .Values.infoMetrics.scrapeConfig }}
+{{ .Values.infoMetrics.scrapeConfig | indent 2 }}
+  {{- end }}
 {{- end }}
 {{- end }}

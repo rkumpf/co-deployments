@@ -43,9 +43,24 @@ infoMetrics:
     # serviceType is NodePort.
     nodePort: 30901
 
+    # Labels to be added to the info metrics Service.  They can be used,
+    # for example, to add target labels in a ServiceMonitor scrape
+    # configuration.
+    #customLabels:
+      #k8s_cluster: mycluster
+
   # When true, a ServiceMonitor is created to enable discovery as a scrape
   # target by a Prometheus Operator running within the cluster.  If set to
   # true when the Prometheus custom resource definitions are not installed,
   # chart installation will be unsuccessful.
   localPrometheusOperator: false
   scrapeInterval: 30s
+
+  # Free-form YAML content to be added to the ServiceMonitor spec, intended to
+  # enable a customized Prometheus scrape configuration including target labels
+  # and relabeling.
+  #scrapeConfig: |-
+    #sampleLimit: 10000
+    #jobLabel: myjob
+    #targetLabels:
+    #- k8s_cluster

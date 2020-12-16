@@ -61,6 +61,12 @@ questions:
     default: 30901
     description: "The external node port at which info metrics are served, when the Service type is NodePort"
     group: "HPE CSI info metrics settings"
+  - variable: infoMetrics.service.customLabels
+    label: "Labels to be added to the info metrics Service"
+    type: multiline
+    required: false
+    description: "Labels to be added to the info metrics Service, for example to add target labels in a ServiceMonitor scrape configuration"
+    group: "HPE CSI info metrics settings"
   - variable: infoMetrics.localPrometheusOperator
     label: "Enable discovery as a scrape target by a Prometheus Operator running within the cluster"
     type: boolean
@@ -68,8 +74,16 @@ questions:
     description: "Enable discovery as a scrape target by a Prometheus Operator running within the cluster by creating a ServiceMonitor resource.  Must be set to false if Prometheus custom resource definitions are not installed."
     group: "HPE CSI info metrics settings"
   - variable: infoMetrics.scrapeInterval
+    show_if: "infoMetrics.localPrometheusOperator"
     label: "The time interval for Prometheus to scrape the info metrics"
     type: string
     default: 30s
     description: "The time interval for Prometheus to scrape the info metrics, when discovery by a Prometheus instance within the cluster is enabled"
+    group: "HPE CSI info metrics settings"
+  - variable: infoMetrics.scrapeConfig
+    show_if: "infoMetrics.localPrometheusOperator"
+    label: "Labels to be added to the info metrics Service"
+    type: multiline
+    required: false
+    description: "Free-form YAML content to be added to the ServiceMonitor spec, intended to enable a customized Prometheus scrape configuration including target labels and relabeling"
     group: "HPE CSI info metrics settings"
