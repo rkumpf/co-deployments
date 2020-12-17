@@ -442,7 +442,8 @@ subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
     # replace with non-default namespace name
-    namespace: kube-system
+    namespace: {{ .Release.Namespace }}
+
 roleRef:
   kind: ClusterRole
   name: csi-mutator-role
@@ -454,7 +455,7 @@ roleRef:
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  namespace: kube-system
+  namespace: {{ .Release.Namespace }}
   name: csi-mutator-cfg
 rules:
 - apiGroups: ["coordination.k8s.io"]
@@ -466,11 +467,12 @@ kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: csi-mutator-role-cfg
-  namespace: kube-system
+  namespace: {{ .Release.Namespace }}
 subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
-    namespace: kube-system
+    namespace: {{ .Release.Namespace }}
+
 roleRef:
   kind: Role
   name: csi-mutator-cfg
@@ -494,6 +496,12 @@ rules:
   - apiGroups: ["storage.hpe.com"]
     resources: ["hpereplicationdeviceinfos"]
     verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["storage.hpe.com"]
+    resources: ["hpevolumegroupinfos"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["storage.hpe.com"]
+    resources: ["hpesnapshotgroupinfos"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]    
   - apiGroups: [""]
     resources: ["pods"]
     verbs: ["get", "list"]
