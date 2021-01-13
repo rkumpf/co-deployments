@@ -97,7 +97,7 @@ spec:
         {{- end }}
         - name: hpe-csi-driver
          {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/csi-driver:edge
+          image: {{ .Values.registry }}/hpestorage/csi-driver:v1.4.0
          {{- else }}
           image: hpestorage/csi-driver:v1.3.0
          {{- end }}
@@ -125,7 +125,7 @@ spec:
               mountPath: /host
         - name: csi-volume-mutator
           {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/volume-mutator:edge
+          image: {{ .Values.registry }}/hpestorage/volume-mutator:v1.2.0
           {{- else }}
           image: hpestorage/volume-mutator:v1.0.0
           {{- end }}
@@ -141,7 +141,7 @@ spec:
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-volume-group-snapshotter
           {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/volume-group-snapshotter:edge
+          image: {{ .Values.registry }}/hpestorage/volume-group-snapshotter:v1.0.0
           {{- else }}
           image: hpestorage/volume-group-snapshotter:v1.0.0
           {{- end }}
@@ -157,7 +157,7 @@ spec:
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-volume-group-provisioner
           {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/volume-group-provisioner:edge
+          image: {{ .Values.registry }}/hpestorage/volume-group-provisioner:v1.0.0
           {{- else }}
           image: hpestorage/volume-group-provisioner:v1.0.0
           {{- end }}
@@ -173,7 +173,7 @@ spec:
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-extensions
           {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/csi-extensions:edge
+          image: {{ .Values.registry }}/hpestorage/csi-extensions:v1.2.0
           {{- else }}
           image: hpestorage/csi-extensions:v1.0.0
           {{- end }}  

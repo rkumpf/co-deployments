@@ -46,30 +46,30 @@ questions:
   show_subquestion_if: true
   subquestions:
   - variable: infoMetrics.service.type
-    label: "The type of Service created to provide access to the info metrics"
+    label: "The type of service created to provide access to the info metrics"
     type: enum
     options:
       - "ClusterIP"
       - "NodePort"
     default: "ClusterIP"
-    description: "The type of Service created to provide access to the info metrics: ClusterIP if Prometheus is running within the cluster or NodePort if the service must be accessed from outside the cluster"
+    description: "The type of service created to provide access to the info metrics: ClusterIP if Prometheus is running within the cluster or NodePort if the service must be accessed from outside the cluster"
     group: "HPE CSI info metrics settings"
   - variable: infoMetrics.service.port
-    label: "The port exposed by the info metrics Service within the cluster"
+    label: "The port exposed by the info metrics service within the cluster"
     type: int
     default: 9090
-    description: "The port exposed by the info metrics Service within the cluster"
+    description: "The port exposed by the info metrics service within the cluster"
     group: "HPE CSI info metrics settings"
   - variable: infoMetrics.service.nodePort
     show_if: "infoMetrics.service.type=NodePort"
-    label: "The external node port at which info metrics are served, when the Service type is NodePort"
+    label: "The external node port at which info metrics are served, when the service type is NodePort"
     type: int
     required: false
-    description: "The external node port at which info metrics are served, when the Service type is NodePort"
+    description: "The external node port at which info metrics are served, when the service type is NodePort"
     group: "HPE CSI info metrics settings"
   - variable: infoMetrics.service.customLabels
-    label: "Labels to be added to the info metrics Service"
+    label: "Labels to be added to the info metrics service"
     type: multiline
     required: false
-    description: "Labels to be added to the info metrics Service, for example to add target labels in a ServiceMonitor scrape configuration"
+    description: "Labels to be added to the info metrics service, for example to add target labels in a ServiceMonitor scrape configuration"
     group: "HPE CSI info metrics settings"
