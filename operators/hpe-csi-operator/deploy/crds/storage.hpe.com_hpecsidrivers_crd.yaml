@@ -15,7 +15,7 @@ spec:
     plural: hpecsidrivers
     singular: hpecsidriver
   scope: Namespaced
-    subresources:
+  subresources:
     status: {}
   validation:
     openAPIV3Schema:
