@@ -24,34 +24,4 @@ spec:
       targetPort: 9099
   selector:
     app: hpe-csi-controller
-
-{{- if .Values.infoMetrics.serviceMonitor.create }}
----
-# Service Monitor to enable discovery as a Prometheus scrape target
-
-kind: ServiceMonitor
-apiVersion: monitoring.coreos.com/v1
-metadata:
-  name: hpe-csi-info-metrics-servicemonitor
-  namespace: {{ .Release.Namespace }}
-  labels:
-    k8s-app: prometheus
-    {{- range $key, $value := .Values.infoMetrics.serviceMonitor.customLabels }}
-    {{ $key }}: {{ $value | quote -}}
-    {{ end }}
-spec:
-  namespaceSelector:
-    matchNames:
-      - {{ .Release.Namespace }}
-  selector:
-    matchLabels:
-      app: hpe-csi-info-metrics-service
-  endpoints:
-    - port: http-metrics
-      scheme: http
-      interval: {{ .Values.infoMetrics.serviceMonitor.scrapeInterval | quote }}
-  {{- if .Values.infoMetrics.serviceMonitor.scrapeConfig }}
-{{ .Values.infoMetrics.serviceMonitor.scrapeConfig | indent 2 }}
-  {{- end }}
-{{- end }}
 {{- end }}

@@ -64,7 +64,7 @@ questions:
     show_if: "infoMetrics.service.type=NodePort"
     label: "The external node port at which info metrics are served, when the Service type is NodePort"
     type: int
-    default: 30901
+    required: false
     description: "The external node port at which info metrics are served, when the Service type is NodePort"
     group: "HPE CSI info metrics settings"
   - variable: infoMetrics.service.customLabels
@@ -72,31 +72,4 @@ questions:
     type: multiline
     required: false
     description: "Labels to be added to the info metrics Service, for example to add target labels in a ServiceMonitor scrape configuration"
-    group: "HPE CSI info metrics settings"
-  - variable: infoMetrics.serviceMonitor.create
-    label: "Enable discovery as a scrape target by a Prometheus instance running within the cluster"
-    type: boolean
-    default: false
-    description: "Enable discovery as a scrape target by a Prometheus instance running within the cluster by creating a ServiceMonitor resource.  Must be set to false if Prometheus custom resource definitions are not installed."
-    group: "HPE CSI info metrics settings"
-  - variable: infoMetrics.serviceMonitor.scrapeInterval
-    show_if: "infoMetrics.serviceMonitor.create"
-    label: "The time interval for Prometheus to scrape the info metrics"
-    type: string
-    default: 30s
-    description: "The time interval for Prometheus to scrape the info metrics, when discovery by a Prometheus instance within the cluster is enabled"
-    group: "HPE CSI info metrics settings"
-  - variable: infoMetrics.serviceMonitor.customLabels
-    show_if: "infoMetrics.serviceMonitor.create"
-    label: "Labels to be added to the info metrics ServiceMonitor"
-    type: multiline
-    required: false
-    description: "Labels to be added to the info metrics ServiceMonitor, for example o enable a Prometheus instance to select the ServiceMonitor to discover scrape targets"
-    group: "HPE CSI info metrics settings"
-  - variable: infoMetrics.serviceMonitor.scrapeConfig
-    show_if: "infoMetrics.serviceMonitor.create"
-    label: "Labels to be added to the info metrics Service"
-    type: multiline
-    required: false
-    description: "Free-form YAML content to be added to the ServiceMonitor spec, intended to enable a customized Prometheus scrape configuration including target labels and relabeling"
     group: "HPE CSI info metrics settings"
