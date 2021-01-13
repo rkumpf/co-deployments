@@ -125,7 +125,7 @@ spec:
               mountPath: /host
         - name: csi-volume-mutator
           {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/volume-mutator:v1.2.0-beta
+          image: {{ .Values.registry }}/hpestorage/volume-mutator:edge
           {{- else }}
           image: hpestorage/volume-mutator:v1.0.0
           {{- end }}
@@ -143,7 +143,7 @@ spec:
           {{- if .Values.registry }}
           image: {{ .Values.registry }}/hpestorage/volume-group-snapshotter:edge
           {{- else }}
-          image: hpestorage/volume-group-snapshotter:v1.0.0-beta
+          image: hpestorage/volume-group-snapshotter:v1.0.0
           {{- end }}
           args:
             - "--v=5"
@@ -159,7 +159,7 @@ spec:
           {{- if .Values.registry }}
           image: {{ .Values.registry }}/hpestorage/volume-group-provisioner:edge
           {{- else }}
-          image: hpestorage/volume-group-provisioner:v1.0.0-beta
+          image: hpestorage/volume-group-provisioner:v1.0.0
           {{- end }}
           args:
             - "--v=5"
