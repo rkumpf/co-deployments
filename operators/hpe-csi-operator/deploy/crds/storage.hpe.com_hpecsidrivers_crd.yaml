@@ -1,9 +1,10 @@
+
 ---
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.2.4
+    controller-gen.kubebuilder.io/version: v0.2.5
   creationTimestamp: null
   name: hpecsidrivers.storage.hpe.com
 spec:
@@ -14,8 +15,6 @@ spec:
     plural: hpecsidrivers
     singular: hpecsidriver
   scope: Namespaced
-  subresources:
-    status: {}
   validation:
     openAPIV3Schema:
       description: HPECSIDriver is the Schema for the hpecsidrivers API
@@ -35,36 +34,66 @@ spec:
         spec:
           description: HPECSIDriverSpec defines the desired state of HPECSIDriver
           properties:
+            disableNodeConformance:
+              description: 'Disable automatic installation of iSCSI/Multipath packages,
+                default: false'
+              type: boolean
             flavor:
               description: Flavor of the CO orchestrator
               type: string
             imagePullPolicy:
               description: Image Pull Policy for HPE CSI driver images
               type: string
+            infoMetrics:
+              description: Enables and configures the CSI info metrics
+              properties:
+                enabled:
+                  description: Specifies whether CSI info metrics are provided
+                  type: boolean
+                service:
+                  description: Specifies properties of the CSI info metrics service
+                  properties:
+                    customLabels:
+                      additionalProperties:
+                        type: string
+                      type: object
+                    nodePort:
+                      type: integer
+                    port:
+                      type: integer
+                    type:
+                      type: string
+                  required:
+                  - port
+                  - type
+                  type: object
+              required:
+              - enabled
+              - service
+              type: object
             iscsi:
               description: Iscsi parameters to be configured
               properties:
                 chapPassword:
-                  description: iSCSI CHAP username
+                  description: iSCSI CHAP password
                   type: string
                 chapUser:
-                  description: iSCSI CHAP password
+                  description: iSCSI CHAP username
                   type: string
               type: object
             logLevel:
               description: Default logLevel for HPE CSI driver deployments
               type: string
-            disableNodeConformance:
-              description: 'Disable automatic installation of iSCSI/Multipath packages, default: false'
-              type: boolean
             registry:
               description: 'Registry prefix for HPE CSI driver images, default: quay.io'
               type: string
           required:
-          - iscsi
-          - imagePullPolicy
-          - logLevel
           - disableNodeConformance
+          - flavor
+          - imagePullPolicy
+          - infoMetrics
+          - iscsi
+          - logLevel
           - registry
           type: object
         status:

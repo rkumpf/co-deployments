@@ -32,11 +32,11 @@ infoMetrics:
   # A Service is created to provide access to the info metrics.
   service:
     # The "ClusterIP" type is appropriate when Prometheus is running within the
-    # cluster.  The "NodePort" type can be used if the service must be accessed
-    # from outside the cluster.
+    # cluster.  The "NodePort" type enables the service to be accessed from
+    # outside the cluster.
     type: ClusterIP
 
-    # The port exposed by the info metrics Service within the cluster.
+    # The port exposed by the info metrics service within the cluster.
     port: 9090
 
     # The external node port at which info metrics are served, when the
@@ -48,4 +48,4 @@ infoMetrics:
     # for example, to add target labels in a ServiceMonitor scrape
     # configuration.
     #customLabels:
-      #k8s_cluster: mycluster
+    #  k8s_cluster: mycluster

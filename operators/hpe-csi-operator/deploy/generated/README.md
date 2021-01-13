@@ -35,8 +35,8 @@ files will be generated under api/v1/. Replace files generated under api/v1 from
 New CSV and CRD can be generated using below command
 
 ```
-cd operators/hpe-csi-driver-operator
-operator-sdk generate csv --csv-channel hpestorage/csi-driver-operator --csv-version=1.1.0 --operator-name hpe-csi-driver-operator --from-version=1.0.0 --update-crds
+cd operators/hpe-csi-operator
+operator-sdk generate csv --csv-channel hpestorage/csi-driver-operator --csv-version=1.1.0 --operator-name hpe-csi-operator --from-version=1.0.0 --update-crds
 ```
 
 A new folder will be generated as olm-catalog/1.1.0 which consist of CRD and new CSV files. This bundle can be used to run operator-scorecard tests and upload to OperatorHub.io.

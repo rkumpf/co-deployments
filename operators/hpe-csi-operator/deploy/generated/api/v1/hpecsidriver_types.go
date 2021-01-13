@@ -22,7 +22,7 @@ import (
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
-// HpecsidriverSpec defines the desired state of Hpecsidriver
+// HPECSIDriverSpec defines the desired state of HPECSIDriver
 type HPECSIDriverSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
@@ -33,18 +33,39 @@ type HPECSIDriverSpec struct {
 	Flavor string `json:"flavor"`
 	// Default logLevel for HPE CSI driver deployments
 	LogLevel string `json:"logLevel"`
-	// DisableNodeConformance disables automatic installation of iscsi/multipath packages
+	// Disable automatic installation of iSCSI/Multipath packages, default: false
 	DisableNodeConformance bool `json:"disableNodeConformance"`
 	// Iscsi parameters to be configured
 	Iscsi IscsiInfo `json:"iscsi"`
-	// Registry prefix for csi images
+	// Registry prefix for HPE CSI driver images, default: quay.io
 	Registry string `json:"registry"`
+	// Enables and configures the CSI info metrics
+	InfoMetrics InfoMetricsInfo `json:"infoMetrics"`
 }
 
 // IscsiInfo defines different Iscsi parameters which can be configured
 type IscsiInfo struct {
-	ChapUser     string `json:"chapUser"`
-	ChapPassword string `json:"chapPassword"`
+	// iSCSI CHAP username
+	ChapUser string `json:"chapUser,omitempty"`
+	// iSCSI CHAP password
+	ChapPassword string `json:"chapPassword,omitempty"`
+}
+
+// InfoMetricsServiceInfo specifies properties of the service definition for the CSI info metrics
+type InfoMetricsServiceInfo struct {
+	Type         string            `json:"type"`
+	Port         int               `json:"port"`
+	NodePort     int               `json:"nodePort,omitempty"`
+	CustomLabels map[string]string `json:"customLabels,omitempty"`
+}
+
+// InfoMetricsInfo specifies whether the CSI info metrics container is
+// enabled and how its service is defined
+type InfoMetricsInfo struct {
+	// Specifies whether CSI info metrics are provided
+	Enabled bool `json:"enabled"`
+	// Specifies properties of the CSI info metrics service
+	Service InfoMetricsServiceInfo `json:"service"`
 }
 
 type HelmAppConditionType string
