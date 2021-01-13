@@ -28,7 +28,7 @@ Create an API:
 kubebuilder create api --group storage.hpe.com --version v1 --kind HPECSIDriver
 ```
 
-files will be generated under api/v1/. Replace files generated under api/v1 from current folder, modify hpecsidriver_types.go as required to add any fields and run `make manifests` to generate HPECSIDriver CRD under `config/crd/bases/` folder. Copy the CRD to deploy/crds folder and create a CR for that instance.
+files will be generated under api/v1/. Replace files generated under api/v1 from current folder, modify hpecsidriver_types.go as required to add any fields and run `export CRD_OPTIONS="crd:crdVersions=v1"` (to use API version v1 instead of v1beta1) and `make manifests` to generate HPECSIDriver CRD under `config/crd/bases/` folder. Copy the CRD to deploy/crds folder and create a CR for that instance.
 
 
 ### Generation of CSV bundle with each driver update:
