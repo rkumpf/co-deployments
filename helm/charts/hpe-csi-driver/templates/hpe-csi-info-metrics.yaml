@@ -1,4 +1,6 @@
-{{- if .Values.infoMetrics.enabled }}
+{{- $infoMetrics := .Values.infoMetrics | default dict }}
+{{- if $infoMetrics.enabled }}
+{{- $service := $infoMetrics.service | default dict }}
 ---
 
 # HPE CSI Info Metrics Service
@@ -9,16 +11,19 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     app: hpe-csi-info-metrics-service
-    {{- range $key, $value := .Values.infoMetrics.service.customLabels }}
+    {{- range $key, $value := $service.customLabels }}
     {{ $key }}: {{ $value | quote -}}
     {{ end }}
 spec:
-  type: {{ .Values.infoMetrics.service.type | quote }}
+  {{- $serviceType := $service.type | default "ClusterIP" }}
+  type: {{ $serviceType | quote }}
   ports:
     - name: http-metrics
-      port: {{ .Values.infoMetrics.service.port }}
-      {{- if eq .Values.infoMetrics.service.type "NodePort" }}
-      nodePort: {{ .Values.infoMetrics.service.nodePort }}
+      port: {{ $service.port | default 9090 }}
+      {{- if eq $serviceType "NodePort" }}
+      {{- if $service.nodePort }}
+      nodePort: {{ $service.nodePort }}
+      {{- end }}
       {{- end }}
       protocol: TCP
       targetPort: 9099

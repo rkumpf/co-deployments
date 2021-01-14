@@ -52,7 +52,7 @@ questions:
       - "ClusterIP"
       - "NodePort"
     default: "ClusterIP"
-    description: "The type of service created to provide access to the info metrics: ClusterIP if Prometheus is running within the cluster or NodePort if the service must be accessed from outside the cluster"
+    description: "The type of service created to provide access to the info metrics: ClusterIP for access solely from within the cluster or NodePort to enable access from outside the cluster"
     group: "HPE CSI info metrics settings"
   - variable: infoMetrics.service.port
     label: "The port exposed by the info metrics service within the cluster"

@@ -23,7 +23,6 @@ import (
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
 // HPECSIDriverSpec defines the desired state of HPECSIDriver
-// +kubebuilder:subresource:status
 type HPECSIDriverSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
@@ -41,7 +40,7 @@ type HPECSIDriverSpec struct {
 	// Registry prefix for HPE CSI driver images, default: quay.io
 	Registry string `json:"registry"`
 	// Enables and configures the CSI info metrics
-	InfoMetrics InfoMetricsInfo `json:"infoMetrics"`
+	InfoMetrics InfoMetricsInfo `json:"infoMetrics,omitempty"`
 }
 
 // IscsiInfo defines different Iscsi parameters which can be configured
@@ -54,9 +53,18 @@ type IscsiInfo struct {
 
 // InfoMetricsServiceInfo specifies properties of the service definition for the CSI info metrics
 type InfoMetricsServiceInfo struct {
-	Type         string            `json:"type"`
-	Port         int               `json:"port"`
-	NodePort     int               `json:"nodePort,omitempty"`
+	// The type of service created to provide access to the info metrics:
+	// ClusterIP (the default) for access solely from within the cluster
+	// or NodePort to enable access from outside the cluster
+	Type string `json:"type,omitempty"`
+	// The port exposed by the info metrics service within the cluster
+	// (default 9090)
+	Port int `json:"port,omitempty"`
+	// The external node port at which info metrics are served, when the
+	// service type is NodePort
+	NodePort int `json:"nodePort,omitempty"`
+	// Labels to be added to the info metrics service, for example to add
+	// target labels in a ServiceMonitor scrape configuration
 	CustomLabels map[string]string `json:"customLabels,omitempty"`
 }
 
@@ -64,9 +72,9 @@ type InfoMetricsServiceInfo struct {
 // enabled and how its service is defined
 type InfoMetricsInfo struct {
 	// Specifies whether CSI info metrics are provided
-	Enabled bool `json:"enabled"`
+	Enabled bool `json:"enabled,omitempty"`
 	// Specifies properties of the CSI info metrics service
-	Service InfoMetricsServiceInfo `json:"service"`
+	Service InfoMetricsServiceInfo `json:"service,omitempty"`
 }
 
 type HelmAppConditionType string
@@ -98,6 +106,7 @@ type HPECSIDriverStatus struct {
 // +kubebuilder:object:root=true
 
 // HPECSIDriver is the Schema for the hpecsidrivers API
+// +kubebuilder:subresource:status
 type HPECSIDriver struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`

@@ -29,14 +29,15 @@ infoMetrics:
   # When enabled is set to false, other values in this section have no effect.
   enabled: false
 
-  # A Service is created to provide access to the info metrics.
+  # A service is created to provide access to the info metrics.
   service:
-    # The "ClusterIP" type is appropriate when Prometheus is running within the
-    # cluster.  The "NodePort" type enables the service to be accessed from
-    # outside the cluster.
+    # The type of service created to provide access to the info metrics:
+    # ClusterIP (the default) for access solely from within the cluster or
+    # NodePort to enable access from outside the cluster.
     type: ClusterIP
 
-    # The port exposed by the info metrics service within the cluster.
+    # The port exposed by the info metrics service within the cluster
+    # (default 9090).
     port: 9090
 
     # The external node port at which info metrics are served, when the
@@ -44,8 +45,7 @@ infoMetrics:
     # automatically.
     #nodePort: 30901
 
-    # Labels to be added to the info metrics Service.  They can be used,
-    # for example, to add target labels in a ServiceMonitor scrape
-    # configuration.
+    # Labels to be added to the info metrics service, for example to add
+    # target labels in a ServiceMonitor scrape configuration.
     #customLabels:
     #  k8s_cluster: mycluster

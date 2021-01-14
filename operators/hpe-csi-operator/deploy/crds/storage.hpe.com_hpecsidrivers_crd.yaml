@@ -58,20 +58,25 @@ spec:
                       customLabels:
                         additionalProperties:
                           type: string
+                        description: Labels to be added to the info metrics service,
+                          for example to add target labels in a ServiceMonitor scrape
+                          configuration
                         type: object
                       nodePort:
+                        description: The external node port at which info metrics
+                          are served, when the service type is NodePort
                         type: integer
                       port:
+                        description: The port exposed by the info metrics service
+                          within the cluster (default 9090)
                         type: integer
                       type:
+                        description: 'The type of service created to provide access
+                          to the info metrics: ClusterIP (the default) for access
+                          solely from within the cluster or NodePort to enable access
+                          from outside the cluster'
                         type: string
-                    required:
-                    - port
-                    - type
                     type: object
-                required:
-                - enabled
-                - service
                 type: object
               iscsi:
                 description: Iscsi parameters to be configured
@@ -94,7 +99,6 @@ spec:
             - disableNodeConformance
             - flavor
             - imagePullPolicy
-            - infoMetrics
             - iscsi
             - logLevel
             - registry
